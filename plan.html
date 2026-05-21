@@ -1,0 +1,1352 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Plano do Módulo Fiscal Agro para Dolibarr</title>
+	<style>
+		:root {
+			--bg: #f5f7f8;
+			--paper: #ffffff;
+			--ink: #172026;
+			--muted: #66747d;
+			--line: #d9e1e5;
+			--green: #1f7a4d;
+			--blue: #1d5f8f;
+			--amber: #9b6519;
+			--red: #a33a35;
+			--soft-green: #e7f3ed;
+			--soft-blue: #e8f1f8;
+			--soft-amber: #fff3df;
+			--soft-red: #fae9e7;
+			--code: #102a3a;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			font-family: Arial, Helvetica, sans-serif;
+			background: var(--bg);
+			color: var(--ink);
+			line-height: 1.55;
+		}
+
+		a {
+			color: var(--blue);
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		.page {
+			max-width: 1180px;
+			margin: 0 auto;
+			padding: 28px 18px 56px;
+		}
+
+		header {
+			background: #123225;
+			color: #fff;
+			padding: 34px 30px;
+			border-radius: 8px;
+			margin-bottom: 18px;
+		}
+
+		header h1 {
+			margin: 0 0 10px;
+			font-size: 34px;
+			line-height: 1.15;
+			letter-spacing: 0;
+		}
+
+		header p {
+			max-width: 880px;
+			margin: 0;
+			color: #d9e8df;
+			font-size: 16px;
+		}
+
+		.meta {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			margin-top: 22px;
+		}
+
+		.badge {
+			display: inline-flex;
+			align-items: center;
+			min-height: 28px;
+			padding: 4px 10px;
+			border: 1px solid rgba(255, 255, 255, 0.28);
+			border-radius: 6px;
+			color: #fff;
+			background: rgba(255, 255, 255, 0.08);
+			font-size: 13px;
+		}
+
+		nav {
+			position: sticky;
+			top: 0;
+			z-index: 5;
+			background: rgba(245, 247, 248, 0.96);
+			border-bottom: 1px solid var(--line);
+			padding: 10px 0;
+			margin-bottom: 18px;
+		}
+
+		nav .nav-inner {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			max-width: 1180px;
+			margin: 0 auto;
+			padding: 0 4px;
+		}
+
+		nav a {
+			display: inline-flex;
+			align-items: center;
+			min-height: 30px;
+			padding: 4px 10px;
+			border: 1px solid var(--line);
+			border-radius: 6px;
+			background: #fff;
+			color: var(--ink);
+			font-size: 13px;
+		}
+
+		section {
+			background: var(--paper);
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 24px;
+			margin: 16px 0;
+		}
+
+		h2 {
+			margin: 0 0 16px;
+			font-size: 24px;
+			letter-spacing: 0;
+		}
+
+		h3 {
+			margin: 22px 0 10px;
+			font-size: 18px;
+			letter-spacing: 0;
+		}
+
+		h4 {
+			margin: 18px 0 8px;
+			font-size: 15px;
+			letter-spacing: 0;
+		}
+
+		p {
+			margin: 0 0 12px;
+		}
+
+		ul, ol {
+			margin: 0 0 14px 20px;
+			padding: 0;
+		}
+
+		li {
+			margin: 5px 0;
+		}
+
+		code {
+			font-family: Consolas, "Courier New", monospace;
+			color: var(--code);
+			background: #eef3f5;
+			border: 1px solid #dce6ea;
+			border-radius: 4px;
+			padding: 1px 5px;
+			font-size: 0.92em;
+		}
+
+		pre {
+			overflow-x: auto;
+			background: #10202c;
+			color: #e9f2f5;
+			border-radius: 8px;
+			padding: 16px;
+			margin: 12px 0;
+		}
+
+		pre code {
+			background: transparent;
+			border: 0;
+			color: inherit;
+			padding: 0;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 12px 0 18px;
+			font-size: 14px;
+		}
+
+		th, td {
+			border: 1px solid var(--line);
+			padding: 9px 10px;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		th {
+			background: #eef3f5;
+			font-weight: 700;
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(12, 1fr);
+			gap: 14px;
+		}
+
+		.card {
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 16px;
+			background: #fff;
+		}
+
+		.span-3 { grid-column: span 3; }
+		.span-4 { grid-column: span 4; }
+		.span-6 { grid-column: span 6; }
+		.span-8 { grid-column: span 8; }
+		.span-12 { grid-column: span 12; }
+
+		.kpi {
+			border-left: 4px solid var(--green);
+			background: var(--soft-green);
+		}
+
+		.info {
+			border-left: 4px solid var(--blue);
+			background: var(--soft-blue);
+		}
+
+		.warn {
+			border-left: 4px solid var(--amber);
+			background: var(--soft-amber);
+		}
+
+		.risk {
+			border-left: 4px solid var(--red);
+			background: var(--soft-red);
+		}
+
+		.label {
+			display: inline-flex;
+			align-items: center;
+			min-height: 24px;
+			padding: 2px 8px;
+			border-radius: 5px;
+			background: #edf2f4;
+			color: #2c3a42;
+			font-size: 12px;
+			font-weight: 700;
+		}
+
+		.label.green { background: var(--soft-green); color: var(--green); }
+		.label.blue { background: var(--soft-blue); color: var(--blue); }
+		.label.amber { background: var(--soft-amber); color: var(--amber); }
+		.label.red { background: var(--soft-red); color: var(--red); }
+
+		.timeline {
+			display: grid;
+			gap: 12px;
+		}
+
+		.step {
+			display: grid;
+			grid-template-columns: 120px 1fr;
+			gap: 14px;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 14px;
+			background: #fff;
+		}
+
+		.step strong {
+			display: block;
+			margin-bottom: 4px;
+		}
+
+		.mermaid-wrap {
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			background: #fff;
+			padding: 12px;
+			overflow-x: auto;
+			margin: 12px 0;
+		}
+
+		.small {
+			color: var(--muted);
+			font-size: 13px;
+		}
+
+		.checklist li {
+			list-style: square;
+		}
+
+		@media (max-width: 860px) {
+			header {
+				padding: 26px 20px;
+			}
+
+			header h1 {
+				font-size: 28px;
+			}
+
+			section {
+				padding: 18px;
+			}
+
+			.grid {
+				grid-template-columns: 1fr;
+			}
+
+			.span-3, .span-4, .span-6, .span-8, .span-12 {
+				grid-column: 1;
+			}
+
+			.step {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+	<script type="module">
+		import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+		mermaid.initialize({
+			startOnLoad: true,
+			theme: "base",
+			themeVariables: {
+				fontFamily: "Arial, Helvetica, sans-serif",
+				primaryColor: "#e7f3ed",
+				primaryTextColor: "#172026",
+				primaryBorderColor: "#1f7a4d",
+				lineColor: "#66747d",
+				secondaryColor: "#e8f1f8",
+				tertiaryColor: "#fff3df"
+			}
+		});
+	</script>
+</head>
+<body>
+	<div class="page">
+		<header>
+			<h1>Plano do Módulo Fiscal Agro para Dolibarr</h1>
+			<p>Planejamento de desenvolvimento para emissão de NF-e modelo 55 e importação de NF-es emitidas contra o CNPJ usando a API Focus NFe, com base no esqueleto atual do módulo <code>custom/fiscal</code>.</p>
+			<div class="meta">
+				<span class="badge">Dolibarr 23</span>
+				<span class="badge">PHP module</span>
+				<span class="badge">Focus NFe API v2</span>
+				<span class="badge">NF-e modelo 55</span>
+				<span class="badge">Agro brasileiro</span>
+				<span class="badge">Atualizado em 2026-05-19</span>
+			</div>
+		</header>
+
+		<nav>
+			<div class="nav-inner">
+				<a href="#visao">Visão</a>
+				<a href="#fontes">Fontes Focus</a>
+				<a href="#empresa-focus">Empresa Focus</a>
+				<a href="#escopo">Escopo</a>
+				<a href="#arquitetura">Arquitetura</a>
+				<a href="#classes">Classes</a>
+				<a href="#dados">Dados</a>
+				<a href="#fluxos">Fluxos</a>
+				<a href="#passo-a-passo">Passo a passo</a>
+				<a href="#roadmap">Roadmap</a>
+				<a href="#qualidade">Qualidade</a>
+				<a href="#riscos">Riscos</a>
+			</div>
+		</nav>
+
+		<section id="visao">
+			<h2>1. Visão do Produto</h2>
+			<div class="grid">
+				<div class="card kpi span-4">
+					<h3>Objetivo do MVP</h3>
+					<p>Emitir NF-e modelo 55 pelo Dolibarr, acompanhar autorização na Focus NFe, armazenar XML/DANFe e importar NF-es recebidas contra o CNPJ da empresa.</p>
+				</div>
+				<div class="card info span-4">
+					<h3>Posicionamento</h3>
+					<p>O Dolibarr continua sendo o ERP operacional. A Focus NFe fica responsável pela comunicação fiscal com SEFAZ, certificado, autorização e distribuição dos documentos.</p>
+				</div>
+				<div class="card warn span-4">
+					<h3>Regra de ouro</h3>
+					<p>Regra tributária brasileira deve ser parametrizada e validada com contador. O módulo deve ajudar, validar consistência e auditar decisões, sem esconder a configuração fiscal.</p>
+				</div>
+			</div>
+
+			<h3>Estado atual do repositório</h3>
+			<ul>
+				<li>A base visível do ModuleBuilder foi limpa: setup, traduções, menus e permissões agora usam termos fiscais reais e não exibem parâmetros de exemplo.</li>
+				<li>A classe <code>NFe</code> foi remodelada como cabeçalho fiscal de NF-e modelo 55, com status fiscal, referência Focus, chave, protocolo, totais e trilha resumida de requisição/resposta.</li>
+				<li>Foram criadas as tabelas e classes base para empresa Focus, metadados de certificado enviado, itens de NF-e, NF-es recebidas, logs sanitizados e cursor incremental de sincronização.</li>
+				<li>Existe cliente HTTP isolado em <code>class/focusnfeclient.class.php</code> para autenticação Basic Auth, ambientes de homologação/produção e endpoints críticos da Focus NFe v2.</li>
+				<li>O setup possui assistente para consultar CNPJ/empresa Focus, validar criação ou atualização com <code>dry_run=1</code>, enviar certificado A1 apenas em memória, registrar metadados e escolher a empresa ativa.</li>
+				<li>A tela da NF-e emitida foi separada em cabeçalho, aba de itens, aba de documentos e aba de histórico Focus, com bloqueio de edição fiscal após transmissão.</li>
+				<li>O payload Focus modelo 55 é montado por <code>FocusNFePayloadBuilder</code> e validado por <code>FiscalValidator</code> antes do envio, sem lógica fiscal dentro da tela.</li>
+				<li><code>FocusNFeService</code> executa transmissão, consulta de status manual/cron, atualização dos status locais e grava XML, DANFe e JSON no diretório de documentos da NF-e.</li>
+			</ul>
+
+			<h3>Implementado em 2026-05-19</h3>
+			<ul>
+				<li>Setup mínimo com ambiente Focus, token mascarado, confirmação explícita de produção, série padrão, polling e importação de recebidas.</li>
+				<li>SQL base para <code>llx_fiscal_focus_company</code>, <code>llx_fiscal_focus_certificate_submission</code>, <code>llx_fiscal_nfe</code>, <code>llx_fiscal_nfe_line</code>, <code>llx_fiscal_nfe_received</code>, <code>llx_fiscal_focus_request_log</code> e <code>llx_fiscal_sync_cursor</code>.</li>
+				<li>Cliente Focus com <code>GET /v2/cnpjs/{cnpj}</code>, <code>GET /v2/empresas</code>, <code>GET /v2/empresas/{id}</code>, <code>POST /v2/empresas</code>, <code>PUT /v2/empresas/{id}</code>, <code>POST /v2/nfe</code>, <code>GET /v2/nfe/{ref}</code> e <code>GET /v2/nfes_recebidas</code>.</li>
+				<li>Tratamento padronizado para HTTP 400, 401, 403, 404, 415, 422, 429 e 500, com mensagens de usuário e logs técnicos sem token, senha ou certificado.</li>
+			</ul>
+
+			<h3>Implementado em 2026-05-20</h3>
+			<ul>
+				<li><code>FocusCompanyService</code> orquestra consulta de CNPJ, descoberta de empresa existente, dry-run obrigatório, envio final, validação transitória de certificado A1 com OpenSSL e gravação apenas de metadados.</li>
+				<li>O assistente em <code>admin/setup.php</code> habilita <code>habilita_nfe</code> e <code>habilita_manifestacao</code>, salva empresa Focus local e permite selecionar a empresa ativa para emissão e recebidas.</li>
+				<li><code>NFe</code> ganhou método de bloqueio fiscal por status transmitido ou posterior; a UI impede edição, exclusão e alteração de itens após transmissão.</li>
+				<li><code>nfe_card.php</code> agora usa abas de cabeçalho, itens e histórico Focus; documentos continuam na aba nativa de documentos do Dolibarr.</li>
+				<li><code>FocusNFePayloadBuilder</code> e <code>FiscalValidator</code> separam payload e validação da UI, cobrindo emitente, destinatário, itens, CFOP, NCM, CST/CSOSN e totais.</li>
+				<li><code>FocusNFeService</code> usa <code>POST /v2/nfe?ref=...</code>, <code>GET /v2/nfe/{ref}?completa=1</code> e caminhos <code>caminho_xml_nota_fiscal</code>/<code>caminho_danfe</code> para salvar documentos locais.</li>
+				<li>Foi cadastrado cron do módulo para consultar NF-es transmitidas em processamento e salvar documentos assim que a Focus disponibilizar os caminhos.</li>
+				<li><code>FocusNFeReceivedService</code> sincroniza NF-es recebidas por <code>versao</code>, atualiza <code>llx_fiscal_sync_cursor</code>, baixa XML/PDF/JSON e preserva pendências de manifestação.</li>
+				<li>Foram adicionadas <code>received_nfe_list.php</code> e <code>received_nfe_card.php</code> para listar recebidas, filtrar pendentes, baixar documentos e executar manifestação do destinatário.</li>
+				<li>A tabela <code>llx_fiscal_nfe_received_manifestation</code> registra histórico de ciência, confirmação, desconhecimento e operação não realizada com justificativa.</li>
+				<li>O checklist final de homologação e go-live foi documentado em <code>docs/homologacao_go_live.md</code>, incluindo certificado válido, vencido, inválido, CNPJ divergente, emissão, importação incremental e manifesto.</li>
+			</ul>
+
+			<h3>Princípios técnicos</h3>
+			<ul>
+				<li>Separar domínio fiscal, cliente Focus, persistência, UI Dolibarr e rotinas agendadas.</li>
+				<li>Persistir requisição, resposta, status SEFAZ, protocolo, XML, DANFe e erros para auditoria.</li>
+				<li>Usar <code>ref</code> idempotente por nota e por token, seguindo a regra da Focus de referência única.</li>
+				<li>Enviar certificado digital para a Focus apenas em memória na requisição; não guardar arquivo PFX/P12 nem senha no Dolibarr.</li>
+				<li>Começar com um fluxo bem validado para NF-e modelo 55 antes de expandir para NFC-e, CT-e, MDF-e ou SPED.</li>
+				<li>Construir perfis fiscais reutilizáveis para operações agro, em vez de hardcode de CFOP/CST/CSOSN dentro das telas.</li>
+			</ul>
+		</section>
+
+		<section id="fontes">
+			<h2>2. Fontes e Fatos da API Focus NFe</h2>
+			<p>Referências oficiais consultadas para este planejamento:</p>
+			<ul>
+				<li><a href="https://doc.focusnfe.com.br/reference/introducao">Nova referência Focus NFe</a></li>
+				<li><a href="https://doc.focusnfe.com.br/reference/criar_empresa">Criar empresa</a></li>
+				<li><a href="https://doc.focusnfe.com.br/reference/atualizar_empresa">Atualizar empresa</a></li>
+				<li><a href="https://doc.focusnfe.com.br/reference/listar_empresas">Listar empresas</a></li>
+				<li><a href="https://doc.focusnfe.com.br/reference/consultar_empresa_por_id">Consultar empresa por ID</a></li>
+				<li><a href="https://doc.focusnfe.com.br/reference/consultar_cnpj">Consultar dados de CNPJ</a></li>
+				<li><a href="https://doc.focusnfe.com.br/reference/emitir_nfe">Emitir NF-e</a></li>
+				<li><a href="https://doc.focusnfe.com.br/reference/consultar_nfe">Consultar NF-e emitida</a></li>
+				<li><a href="https://doc.focusnfe.com.br/reference/consultar_nfes_recebidas">Consultar NF-es recebidas</a></li>
+				<li><a href="https://doc.focusnfe.com.br/reference/consultar_nfe_recebida_individual">Consultar NF-e recebida individual</a></li>
+				<li><a href="https://2025.focusnfe.com.br/doc/">Manual Focus NFe API v2 em migração</a></li>
+				<li><a href="https://campos.focusnfe.com.br/nfe/NotaFiscalXML.html">Campos NF-e 4.00</a></li>
+			</ul>
+
+			<h3>Ambientes e autenticação</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Decisão para o módulo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Autenticação</td>
+						<td>Usar HTTP Basic Auth com token Focus como usuário e senha vazia. Nunca enviar token em query string, salvo diagnóstico temporário.</td>
+					</tr>
+					<tr>
+						<td>Homologação</td>
+						<td><code>https://homologacao.focusnfe.com.br</code>. Ambiente padrão no desenvolvimento e no primeiro deploy.</td>
+					</tr>
+					<tr>
+						<td>Produção</td>
+						<td><code>https://api.focusnfe.com.br</code>. Liberar por configuração explícita e com checklist de go-live.</td>
+					</tr>
+					<tr>
+						<td>Empresa</td>
+						<td>Emitente deve ser cadastrado ou atualizado pelo próprio módulo, com certificado A1 enviado à Focus, <code>habilita_nfe=true</code> e <code>habilita_manifestacao=true</code> quando houver importação de recebidas.</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h3>Endpoints críticos</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Fluxo</th>
+						<th>Endpoint</th>
+						<th>Uso no módulo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Consultar dados de CNPJ</td>
+						<td><code>GET /v2/cnpjs/{cnpj}</code></td>
+						<td>Pré-preencher e conferir razão social, endereço e dados cadastrais antes de criar a empresa Focus.</td>
+					</tr>
+					<tr>
+						<td>Listar empresas</td>
+						<td><code>GET /v2/empresas?cnpj=CNPJ</code></td>
+						<td>Verificar se o CNPJ já está cadastrado na conta Focus e obter o identificador da empresa.</td>
+					</tr>
+					<tr>
+						<td>Criar empresa</td>
+						<td><code>POST /v2/empresas?dry_run=1</code> e <code>POST /v2/empresas</code></td>
+						<td>Cadastrar emitente na Focus, habilitar NF-e e MDe, enviar certificado PFX/P12 em base64 e validar erros de certificado.</td>
+					</tr>
+					<tr>
+						<td>Atualizar empresa</td>
+						<td><code>PUT /v2/empresas/{id}?dry_run=1</code> e <code>PUT /v2/empresas/{id}</code></td>
+						<td>Atualizar dados cadastrais, habilitações, certificado, logo e data inicial de recebimento quando permitido.</td>
+					</tr>
+					<tr>
+						<td>Consultar empresa</td>
+						<td><code>GET /v2/empresas/{id}</code></td>
+						<td>Sincronizar status local, conferir permissões e exibir dados cadastrados na Focus.</td>
+					</tr>
+					<tr>
+						<td>Emitir NF-e</td>
+						<td><code>POST /v2/nfe?ref=REFERENCIA</code></td>
+						<td>Enviar payload modelo 55 montado a partir da nota fiscal local. Tratar retorno síncrono ou assíncrono.</td>
+					</tr>
+					<tr>
+						<td>Consultar status</td>
+						<td><code>GET /v2/nfe/{referencia}</code></td>
+						<td>Atualizar status Focus/SEFAZ, protocolo, mensagens e caminhos de XML/DANFe.</td>
+					</tr>
+					<tr>
+						<td>Cancelar NF-e</td>
+						<td><code>DELETE /v2/nfe/{referencia}</code></td>
+						<td>Fase pós-MVP, com justificativa e bloqueio por status/prazo.</td>
+					</tr>
+					<tr>
+						<td>Carta de correção</td>
+						<td><code>POST /v2/nfe/{referencia}/carta_correcao</code></td>
+						<td>Fase pós-MVP para correções não vedadas pela legislação.</td>
+					</tr>
+					<tr>
+						<td>NF-es recebidas</td>
+						<td><code>GET /v2/nfes_recebidas?cnpj=CNPJ&amp;versao=N</code></td>
+						<td>Sincronizar notas emitidas contra a empresa. Armazenar <code>X-Max-Version</code> por CNPJ para busca incremental.</td>
+					</tr>
+					<tr>
+						<td>Manifestação</td>
+						<td><code>POST /v2/nfes_recebidas/{chave}/manifesto</code></td>
+						<td>Registrar <code>ciencia</code>, <code>confirmacao</code>, <code>desconhecimento</code> ou <code>nao_realizada</code> com justificativa quando exigida.</td>
+					</tr>
+					<tr>
+						<td>Download recebida</td>
+						<td><code>GET /v2/nfes_recebidas/{chave}.xml</code>, <code>.json?completa=1</code>, <code>.pdf</code></td>
+						<td>Guardar XML, JSON completo e DANFe quando disponíveis.</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="card info">
+				<strong>Nota sobre versões de endpoint:</strong>
+				<p>A documentação atual usa <code>/v2/nfes_recebidas</code> no plural. Há referências antigas com <code>/v2/nfe_recebidas</code>. O módulo deve implementar o endpoint plural e manter o antigo apenas como nota histórica de suporte, sem misturar nos fluxos novos.</p>
+			</div>
+		</section>
+
+		<section id="empresa-focus">
+			<h2>3. Onboarding da Empresa na Focus</h2>
+			<p>O módulo deve permitir que a própria implantação no Dolibarr cadastre e mantenha a empresa emitente na Focus. O certificado digital será usado apenas durante a requisição de criação/atualização; arquivo e senha não ficam salvos localmente.</p>
+
+			<h3>Objetivo do assistente</h3>
+			<div class="grid">
+				<div class="card span-4">
+					<h4><span class="label green">Cadastrar empresa</span></h4>
+					<p>Consultar CNPJ, preencher dados cadastrais, validar com <code>dry_run=1</code> e efetivar <code>POST /v2/empresas</code> com <code>habilita_nfe=true</code>.</p>
+				</div>
+				<div class="card span-4">
+					<h4><span class="label blue">Habilitar recebidas</span></h4>
+					<p>Ativar <code>habilita_manifestacao=true</code> e registrar <code>data_inicio_recebimento_nfe</code>. Essa data deve ser escolhida com cuidado, pois a Focus informa que ela não pode ser alterada depois de definida.</p>
+				</div>
+				<div class="card span-4">
+					<h4><span class="label amber">Gerir certificados</span></h4>
+					<p>Receber PFX/P12 e senha em formulário seguro, converter para base64 em memória, enviar para a Focus e salvar somente metadados do envio.</p>
+				</div>
+			</div>
+
+			<h3>Fluxo do assistente</h3>
+			<ol>
+				<li>Admin informa token Focus, ambiente, CNPJ e escolhe se quer buscar dados cadastrais pelo CNPJ.</li>
+				<li>Sistema executa <code>GET /v2/empresas?cnpj=CNPJ</code> para descobrir se já existe empresa na Focus.</li>
+				<li>Se não existir, monta payload para <code>POST /v2/empresas?dry_run=1</code>. Se existir, monta payload para <code>PUT /v2/empresas/{id}?dry_run=1</code>.</li>
+				<li>Admin envia certificado A1 <code>.pfx</code>/<code>.p12</code> e senha. O backend valida extensão, tamanho, CNPJ do certificado, validade e cadeia básica quando possível.</li>
+				<li>Se o <code>dry_run</code> passar, o admin confirma e o sistema efetiva <code>POST</code> ou <code>PUT</code> sem persistir arquivo nem senha.</li>
+				<li>Sistema salva empresa Focus local, status do envio, ID retornado, ambiente, habilitações e metadados do certificado enviado.</li>
+				<li>Admin escolhe qual empresa Focus local será o emitente ativo para emissão e importação.</li>
+			</ol>
+
+			<div class="mermaid-wrap">
+				<pre class="mermaid">
+sequenceDiagram
+	actor Admin as Admin Dolibarr
+	participant UI as Setup Fiscal
+	participant Service as FocusCompanyService
+	participant Client as FocusNfeClient
+	participant Focus as Focus NFe
+	participant DB as llx_fiscal_focus_*
+
+	Admin->>UI: informa CNPJ, dados e certificado
+	UI->>Service: validateCompanyPayload()
+	Service->>Client: listCompanies(cnpj)
+	Client->>Focus: GET /v2/empresas?cnpj=CNPJ
+	Focus-->>Client: empresa existente ou lista vazia
+	Service->>Service: valida PFX/P12 em memória
+	Service->>Client: create/update dry_run
+	Client->>Focus: POST ou PUT /v2/empresas?dry_run=1
+	Focus-->>Client: validação ou erro
+	Admin->>UI: confirma envio
+	Service->>Client: create/update final
+	Client->>Focus: POST ou PUT /v2/empresas
+	Focus-->>Client: empresa criada/atualizada
+	Service->>DB: grava empresa e metadados do certificado
+	Service->>Service: descarta arquivo e senha da memória
+				</pre>
+			</div>
+
+			<h3>Dados que ficam no Dolibarr</h3>
+			<ul>
+				<li>Empresa Focus: ambiente, ID Focus, CNPJ/CPF, razão social, IE, UF, regime tributário, status local, habilitações e data da última sincronização.</li>
+				<li>Certificado enviado: hash SHA-256 do arquivo, CNPJ extraído, titular, emissor, número de série, validade inicial/final, usuário que enviou, data/hora, ambiente, status Focus e mensagem de erro quando houver.</li>
+				<li>O cadastro ativo indica qual empresa Focus será usada para emitir NF-e e importar recebidas.</li>
+			</ul>
+
+			<h3>Dados que não ficam no Dolibarr</h3>
+			<ul>
+				<li>Arquivo <code>.pfx</code>/<code>.p12</code>.</li>
+				<li>Senha do certificado.</li>
+				<li>Conteúdo base64 do certificado.</li>
+				<li>Chave privada extraída do certificado.</li>
+			</ul>
+
+			<div class="card warn">
+				<strong>Seleção de certificado:</strong>
+				<p>A lista local mostra os certificados já enviados para auditoria e escolha do cadastro ativo. Como o arquivo e a senha não são armazenados, reativar um certificado antigo ou trocar certificado exige novo upload. Se a Focus vier a oferecer endpoint próprio de listagem/seleção de certificados, o módulo pode evoluir para sincronizar essa biblioteca remota.</p>
+			</div>
+		</section>
+
+		<section id="escopo">
+			<h2>4. Escopo Funcional</h2>
+			<h3>MVP bem feito</h3>
+			<div class="grid">
+				<div class="card span-4">
+					<h4><span class="label amber">Empresa Focus</span></h4>
+					<ul>
+						<li>Cadastrar ou atualizar empresa na Focus pelo Dolibarr.</li>
+						<li>Enviar certificado digital A1 de forma transitória, sem salvar arquivo ou senha.</li>
+						<li>Habilitar NF-e modelo 55 e manifestação de destinatário.</li>
+						<li>Listar empresas/certificados enviados por metadados para seleção do cadastro ativo.</li>
+						<li>Usar <code>dry_run=1</code> antes de efetivar criação ou atualização.</li>
+					</ul>
+				</div>
+				<div class="card span-4">
+					<h4><span class="label green">Emissão modelo 55</span></h4>
+					<ul>
+						<li>Criar NF-e em rascunho com emitente, destinatário, itens, frete, totais e informações adicionais.</li>
+						<li>Validar campos mínimos: CNPJ/CPF, IE, endereço, NCM, CFOP, unidade, quantidade, valores, CST/CSOSN, PIS/COFINS.</li>
+						<li>Montar payload Focus a partir de dados normalizados.</li>
+						<li>Transmitir para Focus, salvar request/response e consultar status até autorização ou rejeição.</li>
+						<li>Armazenar XML autorizado e DANFe no diretório de documentos Dolibarr.</li>
+					</ul>
+				</div>
+				<div class="card span-4">
+					<h4><span class="label blue">NF-es recebidas</span></h4>
+					<ul>
+						<li>Sincronizar por CNPJ usando <code>versao</code> incremental.</li>
+						<li>Persistir resumo, chave, emitente, valor, situação, manifestação, versão e flags de XML completo.</li>
+						<li>Baixar XML/JSON/PDF quando disponível.</li>
+						<li>Permitir manifestação de ciência e manifestação final.</li>
+						<li>Exibir pendências de manifestação e notas canceladas/corrigidas.</li>
+					</ul>
+				</div>
+			</div>
+
+			<h3>Foco agro no primeiro desenho</h3>
+			<ul>
+				<li>Perfis fiscais por tipo de operação: venda de produção, remessa, retorno, transferência, devolução, compra de insumos e remessa para beneficiamento/armazenagem.</li>
+				<li>Campos operacionais para produtos agro: NCM, CEST quando aplicável, unidade comercial/tributável, conversão de unidade, peso, lote, safra, produtor rural e informações complementares.</li>
+				<li>Suporte a terceiro como produtor rural pessoa física ou jurídica, com IE/CPF/CNPJ e endereço rural completo.</li>
+				<li>Configuração explícita de CFOP/CST/CSOSN por UF de origem/destino e finalidade. Sem regra tributária oculta em código.</li>
+				<li>Preparar vínculos futuros com estoque/lote/romaneio, sem tornar isso dependência do MVP.</li>
+			</ul>
+
+			<h3>Fora do MVP</h3>
+			<ul>
+				<li>NFC-e, NFSe, CT-e, MDF-e e SPED.</li>
+				<li>Cálculo fiscal completo automático para todos os regimes, UFs e benefícios.</li>
+				<li>Integração automática com contas a pagar/receber e estoque definitivo.</li>
+				<li>Cancelamento, carta de correção e inutilização como operação de produção; ficam planejados para fase 2.</li>
+			</ul>
+		</section>
+
+		<section id="arquitetura">
+			<h2>5. Arquitetura Proposta</h2>
+			<div class="mermaid-wrap">
+				<pre class="mermaid">
+flowchart LR
+	Dolibarr["Dolibarr UI<br>cards, lists, setup, permissions"]
+	Company["Focus company onboarding<br>empresa, certificado, habilitações"]
+	Domain["Fiscal domain<br>NFe, lines, received docs, events"]
+	Builder["Payload builder<br>Dolibarr -> Focus JSON"]
+	Client["FocusNfeClient<br>HTTP Basic, retries, errors"]
+	Focus["Focus NFe API v2"]
+	Storage["Document storage<br>XML, PDF, JSON, logs"]
+	Cron["Dolibarr cron<br>status polling, received sync"]
+	DB["Dolibarr DB<br>llx_fiscal_*"]
+
+	Dolibarr --> Domain
+	Dolibarr --> Company
+	Company --> Client
+	Company --> DB
+	Domain --> Builder
+	Builder --> Client
+	Client --> Focus
+	Focus --> Client
+	Client --> Domain
+	Domain --> DB
+	Client --> Storage
+	Cron --> Client
+	Cron --> Domain
+				</pre>
+			</div>
+
+			<h3>Camadas</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Camada</th>
+						<th>Responsabilidade</th>
+						<th>Arquivos esperados</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Configuração</td>
+						<td>Ambiente Focus, token seguro, CNPJ emitente, empresa ativa, série, timezone, políticas de importação.</td>
+						<td><code>admin/setup.php</code>, <code>class/fiscalconfig.class.php</code></td>
+					</tr>
+					<tr>
+						<td>Onboarding empresa Focus</td>
+						<td>Criar/atualizar empresa Focus, enviar certificado transitório, habilitar NF-e/MDe e manter lista local de envios.</td>
+						<td><code>class/focuscompany.class.php</code>, <code>class/focuscompanyservice.class.php</code>, <code>class/focuscertificatesubmission.class.php</code></td>
+					</tr>
+					<tr>
+						<td>Domínio</td>
+						<td>NF-e emitida, itens, NF-e recebida, manifesto, eventos, perfis fiscais.</td>
+						<td><code>class/nfe.class.php</code>, <code>class/nfereceived.class.php</code>, <code>class/fiscaloperationprofile.class.php</code></td>
+					</tr>
+					<tr>
+						<td>Integração Focus</td>
+						<td>Requisições HTTP, autenticação, tratamento de erros, rate limit, normalização de resposta.</td>
+						<td><code>class/focusnfeclient.class.php</code></td>
+					</tr>
+					<tr>
+						<td>Mapeamento</td>
+						<td>Converter dados Dolibarr para JSON Focus e validar campos obrigatórios.</td>
+						<td><code>class/focusnfepayloadbuilder.class.php</code>, <code>class/fiscalvalidator.class.php</code></td>
+					</tr>
+					<tr>
+						<td>Jobs</td>
+						<td>Consultar status de notas enviadas e importar NF-es recebidas por CNPJ/versão.</td>
+						<td><code>class/fiscalcron.class.php</code> ou métodos dedicados nas classes de serviço</td>
+					</tr>
+					<tr>
+						<td>UI</td>
+						<td>Telas para emissão, status, documentos, recebidas e manifesto.</td>
+						<td><code>nfe_card.php</code>, <code>nfe_list.php</code>, <code>received_nfe_list.php</code>, <code>received_nfe_card.php</code></td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+
+		<section id="classes">
+			<h2>6. Diagrama de Classes</h2>
+			<div class="mermaid-wrap">
+				<pre class="mermaid">
+classDiagram
+	class CommonObject
+	class CommonObjectLine
+
+	class NFe {
+		+int id
+		+string ref
+		+string focus_ref
+		+string chave_nfe
+		+string status_focus
+		+string status_sefaz
+		+string mensagem_sefaz
+		+string protocolo
+		+float valor_total
+		+create()
+		+validateFiscal()
+		+markSent()
+		+markAuthorized()
+		+markRejected()
+	}
+
+	class NFeLine {
+		+int fk_nfe
+		+int numero_item
+		+string codigo_produto
+		+string descricao
+		+string ncm
+		+string cfop
+		+string unidade_comercial
+		+float quantidade_comercial
+		+float valor_unitario_comercial
+		+string icms_situacao_tributaria
+	}
+
+	class FiscalOperationProfile {
+		+string code
+		+string label
+		+string natureza_operacao
+		+string cfop
+		+string finalidade_emissao
+		+string regime_tributario
+		+bool active
+		+applyToLine()
+	}
+
+	class FocusCompany {
+		+int id
+		+string focus_company_id
+		+string environment
+		+string cnpj
+		+string nome
+		+int regime_tributario
+		+bool habilita_nfe
+		+bool habilita_manifestacao
+		+int fk_certificate_active
+		+markActive()
+		+syncFromFocus()
+	}
+
+	class FocusCertificateSubmission {
+		+int fk_focus_company
+		+string certificate_hash
+		+string subject_name
+		+string issuer_name
+		+string serial_number
+		+date valid_from
+		+date valid_to
+		+string status
+		+recordSubmission()
+	}
+
+	class FocusCompanyService {
+		+listByCnpj(cnpj)
+		+validateCertificateUpload(file, password)
+		+buildCompanyPayload()
+		+dryRunCreateOrUpdate()
+		+createOrUpdate()
+		+discardCertificateSecrets()
+	}
+
+	class FocusNfeClient {
+		+string environment
+		+string baseUrl
+		+listCompanies(cnpj)
+		+getCompany(id)
+		+createCompany(payload, dryRun)
+		+updateCompany(id, payload, dryRun)
+		+emitNfe(ref, payload)
+		+getNfe(ref, completa)
+		+cancelNfe(ref, justificativa)
+		+listReceived(cnpj, versao, filters)
+		+getReceivedJson(chave, completa)
+		+getReceivedXml(chave)
+		+manifestReceived(chave, tipo, justificativa)
+	}
+
+	class FocusNfePayloadBuilder {
+		+buildFromNFe(NFe nfe)
+		+buildEmitente()
+		+buildDestinatario()
+		+buildItems()
+		+buildTotals()
+	}
+
+	class FiscalValidator {
+		+validateConfig()
+		+validateParty()
+		+validateItems()
+		+validateTaxes()
+		+validateBeforeTransmission()
+	}
+
+	class NFeReceived {
+		+string chave_nfe
+		+string cnpj_destinatario
+		+string documento_emitente
+		+string nome_emitente
+		+string situacao
+		+string manifestacao_destinatario
+		+bool nfe_completa
+		+int versao
+		+upsertFromFocus()
+		+markDownloaded()
+	}
+
+	class NFeReceivedManifest {
+		+int fk_received
+		+string tipo
+		+string justificativa
+		+string protocolo
+		+string status_sefaz
+		+createFromFocus()
+	}
+
+	class FocusRequestLog {
+		+string method
+		+string endpoint
+		+int http_code
+		+string focus_code
+		+string focus_message
+		+datetime date_request
+	}
+
+	class FiscalSyncCursor {
+		+string cnpj
+		+int last_version
+		+datetime last_sync
+		+updateFromHeaders()
+	}
+
+	class FiscalDocumentStorage {
+		+saveXml()
+		+savePdf()
+		+saveJson()
+		+getDocumentPath()
+	}
+
+	CommonObject <|-- NFe
+	CommonObjectLine <|-- NFeLine
+	CommonObject <|-- FocusCompany
+	CommonObject <|-- FocusCertificateSubmission
+	NFe "1" o-- "*" NFeLine
+	NFe "*" --> "0..1" FiscalOperationProfile
+	FocusCompany "1" o-- "*" FocusCertificateSubmission
+	FocusCompanyService --> FocusCompany
+	FocusCompanyService --> FocusCertificateSubmission
+	FocusCompanyService --> FocusNfeClient
+	FocusNfePayloadBuilder --> NFe
+	FocusNfePayloadBuilder --> NFeLine
+	FocusNfeClient --> FocusRequestLog
+	FocusNfeClient --> FiscalDocumentStorage
+	NFeReceived "1" o-- "*" NFeReceivedManifest
+	FiscalSyncCursor --> NFeReceived
+	FiscalValidator --> NFe
+	FiscalValidator --> FiscalOperationProfile
+				</pre>
+			</div>
+
+			<h3>Observações de design</h3>
+			<ul>
+				<li><code>FocusNfeClient</code> não deve conhecer UI Dolibarr. Ele recebe payloads e retorna DTOs/arrays normalizados.</li>
+				<li><code>FocusNfePayloadBuilder</code> deve ser testável sem banco, sempre que possível, recebendo objetos já carregados.</li>
+				<li><code>FiscalValidator</code> deve gerar mensagens compreensíveis para usuário e logs técnicos para suporte.</li>
+				<li><code>NFeReceived</code> é separado de <code>NFe</code>; nota emitida localmente e nota recebida contra CNPJ têm ciclos de vida diferentes.</li>
+				<li><code>FocusCertificateSubmission</code> armazena somente metadados. Arquivo, senha, base64 e chave privada não devem ser persistidos.</li>
+			</ul>
+		</section>
+
+		<section id="dados">
+			<h2>7. Modelo de Dados Planejado</h2>
+			<h3>Tabelas principais</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Tabela</th>
+						<th>Finalidade</th>
+						<th>Campos essenciais</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>llx_fiscal_focus_company</code></td>
+						<td>Empresas cadastradas ou sincronizadas com a Focus.</td>
+						<td><code>entity</code>, <code>environment</code>, <code>focus_company_id</code>, <code>cnpj</code>, <code>cpf</code>, <code>nome</code>, <code>nome_fantasia</code>, <code>inscricao_estadual</code>, <code>regime_tributario</code>, <code>uf</code>, <code>habilita_nfe</code>, <code>habilita_manifestacao</code>, <code>data_inicio_recebimento_nfe</code>, <code>fk_certificate_active</code>, <code>active</code>, <code>last_sync</code>.</td>
+					</tr>
+					<tr>
+						<td><code>llx_fiscal_focus_certificate_submission</code></td>
+						<td>Histórico de certificados enviados para a Focus, sem armazenar arquivo ou senha.</td>
+						<td><code>fk_focus_company</code>, <code>environment</code>, <code>certificate_hash</code>, <code>subject_name</code>, <code>issuer_name</code>, <code>serial_number</code>, <code>cnpj_certificado</code>, <code>valid_from</code>, <code>valid_to</code>, <code>status</code>, <code>focus_message</code>, <code>fk_user_creat</code>, <code>date_creation</code>.</td>
+					</tr>
+					<tr>
+						<td><code>llx_fiscal_nfe</code></td>
+						<td>Cabeçalho da NF-e emitida pelo módulo.</td>
+						<td><code>ref</code>, <code>entity</code>, <code>fk_soc</code>, <code>focus_ref</code>, <code>chave_nfe</code>, <code>modelo</code>, <code>serie</code>, <code>numero</code>, <code>tipo_documento</code>, <code>finalidade_emissao</code>, <code>natureza_operacao</code>, <code>status</code>, <code>status_focus</code>, <code>status_sefaz</code>, <code>mensagem_sefaz</code>, <code>protocolo</code>, <code>valor_total</code>, <code>caminho_xml</code>, <code>caminho_danfe</code>.</td>
+					</tr>
+					<tr>
+						<td><code>llx_fiscal_nfe_line</code></td>
+						<td>Itens fiscais da nota.</td>
+						<td><code>fk_nfe</code>, <code>fk_product</code>, <code>numero_item</code>, <code>codigo_produto</code>, <code>descricao</code>, <code>ncm</code>, <code>cfop</code>, <code>unidade_comercial</code>, <code>quantidade_comercial</code>, <code>valor_unitario_comercial</code>, <code>valor_bruto</code>, <code>icms_origem</code>, <code>icms_situacao_tributaria</code>, <code>pis_situacao_tributaria</code>, <code>cofins_situacao_tributaria</code>.</td>
+					</tr>
+					<tr>
+						<td><code>llx_fiscal_nfe_received</code></td>
+						<td>NF-es emitidas contra o CNPJ da empresa.</td>
+						<td><code>chave_nfe</code>, <code>cnpj_destinatario</code>, <code>documento_emitente</code>, <code>nome_emitente</code>, <code>valor_total</code>, <code>data_emissao</code>, <code>situacao</code>, <code>manifestacao_destinatario</code>, <code>nfe_completa</code>, <code>tipo_nfe</code>, <code>versao</code>, <code>digest_value</code>, <code>caminho_xml</code>, <code>caminho_pdf</code>, <code>raw_json</code>.</td>
+					</tr>
+					<tr>
+						<td><code>llx_fiscal_nfe_received_manifest</code></td>
+						<td>Histórico de manifestações enviadas para NF-es recebidas.</td>
+						<td><code>fk_received</code>, <code>tipo</code>, <code>justificativa</code>, <code>status_sefaz</code>, <code>mensagem_sefaz</code>, <code>protocolo</code>, <code>date_creation</code>, <code>fk_user_creat</code>.</td>
+					</tr>
+					<tr>
+						<td><code>llx_fiscal_focus_request_log</code></td>
+						<td>Auditoria técnica das chamadas Focus.</td>
+						<td><code>object_type</code>, <code>object_id</code>, <code>method</code>, <code>endpoint</code>, <code>http_code</code>, <code>request_hash</code>, <code>response_body</code>, <code>error_message</code>, <code>date_request</code>.</td>
+					</tr>
+					<tr>
+						<td><code>llx_fiscal_sync_cursor</code></td>
+						<td>Controle incremental da importação por CNPJ.</td>
+						<td><code>cnpj</code>, <code>service</code>, <code>last_version</code>, <code>last_total_count</code>, <code>last_sync</code>, <code>last_error</code>.</td>
+					</tr>
+					<tr>
+						<td><code>llx_fiscal_operation_profile</code></td>
+						<td>Perfis fiscais reutilizáveis por operação agro.</td>
+						<td><code>code</code>, <code>label</code>, <code>natureza_operacao</code>, <code>tipo_documento</code>, <code>finalidade_emissao</code>, <code>cfop_default</code>, <code>icms_default</code>, <code>pis_default</code>, <code>cofins_default</code>, <code>active</code>.</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h3>Índices e integridade</h3>
+			<ul>
+				<li><code>llx_fiscal_focus_company.environment + cnpj + entity</code> único.</li>
+				<li><code>llx_fiscal_focus_certificate_submission.fk_focus_company + certificate_hash</code> indexado para auditoria e deduplicação.</li>
+				<li><code>llx_fiscal_nfe.ref</code> único por entidade.</li>
+				<li><code>llx_fiscal_nfe.focus_ref</code> único por entidade e ambiente Focus.</li>
+				<li><code>llx_fiscal_nfe.chave_nfe</code> único quando autorizado.</li>
+				<li><code>llx_fiscal_nfe_received.chave_nfe + cnpj_destinatario</code> único.</li>
+				<li><code>llx_fiscal_sync_cursor.cnpj + service + entity</code> único.</li>
+				<li>Chaves estrangeiras para <code>societe</code>, <code>product</code>, <code>user</code> e objeto fiscal quando disponível.</li>
+			</ul>
+		</section>
+
+		<section id="fluxos">
+			<h2>8. Fluxos Operacionais</h2>
+			<h3>Cadastro ou atualização da empresa Focus</h3>
+			<div class="mermaid-wrap">
+				<pre class="mermaid">
+flowchart TD
+	A["Admin abre Setup Fiscal"] --> B["Informa token, ambiente e CNPJ"]
+	B --> C["GET /v2/empresas?cnpj=CNPJ"]
+	C --> D{"Empresa existe na Focus?"}
+	D -->|Nao| E["Preparar POST /v2/empresas"]
+	D -->|Sim| F["Preparar PUT /v2/empresas/{id}"]
+	E --> G["Admin envia PFX/P12 e senha"]
+	F --> G
+	G --> H["Validar certificado em memoria"]
+	H --> I["Executar dry_run=1"]
+	I --> J{"Focus validou?"}
+	J -->|Nao| K["Exibir erro e gravar tentativa sem segredo"]
+	J -->|Sim| L["Confirmar envio definitivo"]
+	L --> M["Enviar certificado base64 para Focus"]
+	M --> N["Salvar empresa e metadados do certificado"]
+	N --> O["Selecionar empresa ativa para NF-e/MDe"]
+				</pre>
+			</div>
+
+			<h3>Emissão de NF-e</h3>
+			<div class="mermaid-wrap">
+				<pre class="mermaid">
+sequenceDiagram
+	actor User as Usuário Dolibarr
+	participant UI as nfe_card.php
+	participant NFe as NFe
+	participant Builder as PayloadBuilder
+	participant Client as FocusNfeClient
+	participant Focus as Focus NFe
+	participant Cron as Status Cron
+	participant Store as Storage
+
+	User->>UI: cria rascunho NF-e
+	UI->>NFe: salva cabeçalho e itens
+	User->>UI: aciona "Transmitir"
+	UI->>NFe: validateFiscal()
+	NFe->>Builder: buildFromNFe()
+	Builder-->>NFe: payload JSON
+	NFe->>Client: emitNfe(ref, payload)
+	Client->>Focus: POST /v2/nfe?ref=REF
+	Focus-->>Client: 201 autorizado ou 202 processamento
+	Client-->>NFe: resposta normalizada
+	NFe->>Store: salva request/response
+	Cron->>Client: GET /v2/nfe/REF
+	Client->>Focus: consulta status
+	Focus-->>Client: status, protocolo, caminhos
+	Client-->>NFe: autorização/rejeição
+	NFe->>Store: baixa XML/DANFe se autorizado
+	UI-->>User: exibe status e documentos
+				</pre>
+			</div>
+
+			<h3>Importação de NF-es recebidas</h3>
+			<div class="mermaid-wrap">
+				<pre class="mermaid">
+sequenceDiagram
+	participant Cron as Cron Dolibarr
+	participant Cursor as SyncCursor
+	participant Client as FocusNfeClient
+	participant Focus as Focus NFe
+	participant Rec as NFeReceived
+	participant Store as Storage
+	actor User as Usuário Fiscal
+
+	Cron->>Cursor: lê last_version por CNPJ
+	Cron->>Client: listReceived(cnpj, versao)
+	Client->>Focus: GET /v2/nfes_recebidas?cnpj=CNPJ&versao=N
+	Focus-->>Client: lista + X-Max-Version
+	Client-->>Rec: upsert por chave_nfe
+	Rec->>Cursor: atualiza last_version
+	alt nfe_completa ou usuário solicita
+		Rec->>Client: getReceivedXml(chave)
+		Client->>Focus: GET /v2/nfes_recebidas/CHAVE.xml
+		Client-->>Store: salva XML
+	end
+	User->>Rec: manifesta ciência/confirmacao/desconhecimento
+	Rec->>Client: manifestReceived(chave, tipo)
+	Client->>Focus: POST /v2/nfes_recebidas/CHAVE/manifesto
+	Client-->>Rec: salva protocolo e status
+				</pre>
+			</div>
+		</section>
+
+		<section id="passo-a-passo">
+			<h2>9. Passo a Passo de Desenvolvimento</h2>
+			<div class="timeline">
+				<div class="step">
+					<div><span class="label blue">Etapa 0</span></div>
+					<div>
+						<strong>Limpar base ModuleBuilder</strong>
+						<p>Remover parâmetros genéricos do setup, ajustar traduções, padronizar permissões e revisar nomes herdados do template. Resultado: módulo limpo, instalável e sem placeholders visíveis.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 1</span></div>
+					<div>
+						<strong>Configuração base Focus</strong>
+						<p>Criar tela de configuração com ambiente, token seguro, série padrão, timezone, política de polling e importação. Validar permissões de admin e mascarar token.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 2</span></div>
+					<div>
+						<strong>Banco de dados fiscal e empresa Focus</strong>
+						<p>Evoluir SQL para cabeçalho NF-e real, criar linhas, recebidas, manifesto, logs, cursor, perfis fiscais, empresas Focus e metadados de certificados enviados. Preparar scripts <code>.key.sql</code> com índices únicos.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 3</span></div>
+					<div>
+						<strong>Cliente Focus NFe e empresas</strong>
+						<p>Implementar <code>FocusNfeClient</code> com cURL, Basic Auth, JSON, timeouts, endpoints de empresas, endpoints de NF-e/recebidas, tratamento de 400/401/403/404/415/422/429/500 e logs. Sem token, certificado ou senha em logs.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 4</span></div>
+					<div>
+						<strong>Assistente de empresa Focus</strong>
+						<p>Criar fluxo no setup para consultar CNPJ, listar empresa existente, criar/atualizar com <code>dry_run=1</code>, enviar certificado transitório, habilitar NF-e/MDe e escolher empresa ativa.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 5</span></div>
+					<div>
+						<strong>Modelo e UI de NF-e</strong>
+						<p>Transformar <code>NFe</code> em documento fiscal, adicionar linhas, botões de fluxo, badges de status, abas de itens, documentos e histórico de Focus.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 6</span></div>
+					<div>
+						<strong>Payload e validação</strong>
+						<p>Criar builder para campos Focus: emitente, destinatário, itens, totais, frete e informações adicionais. Gerar mensagens de validação orientadas ao usuário antes de transmitir.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 7</span></div>
+					<div>
+						<strong>Transmissão e consulta de status</strong>
+						<p>Enviar <code>POST /v2/nfe</code>, salvar retorno, consultar <code>GET /v2/nfe/{ref}</code> por cron e manualmente. Bloquear edição fiscal após transmissão, exceto campos administrativos permitidos.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 8</span></div>
+					<div>
+						<strong>Documentos fiscais</strong>
+						<p>Salvar XML, DANFe e JSON completo em diretório Dolibarr por entidade/ref/chave. Exibir downloads e preservar trilha de auditoria.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 9</span></div>
+					<div>
+						<strong>Importação de NF-es recebidas</strong>
+						<p>Implementar sincronização incremental por <code>versao</code>, upsert por chave, tela de recebidas, filtros por pendência e download de XML/PDF.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 10</span></div>
+					<div>
+						<strong>Manifestação do destinatário</strong>
+						<p>Adicionar ações de <code>ciencia</code>, <code>confirmacao</code>, <code>desconhecimento</code> e <code>nao_realizada</code>, com justificativa de 15 a 255 caracteres para operação não realizada.</p>
+					</div>
+				</div>
+				<div class="step">
+					<div><span class="label blue">Etapa 11</span></div>
+					<div>
+						<strong>Homologação e go-live</strong>
+						<p>Testar criação/atualização de empresa Focus, certificado, emissão em homologação, rejeições controladas, autorização, importação, manifesto e downloads. Só habilitar produção com checklist de cadastro Focus, certificado, série, contador e backup.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="roadmap">
+			<h2>10. Roadmap</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Fase</th>
+						<th>Entrega</th>
+						<th>Resultado esperado</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Fase 1 - Fundamento e empresa Focus</td>
+						<td>Setup Focus, banco fiscal, cliente HTTP, onboarding de empresa, envio transitório de certificado, logs e permissões.</td>
+						<td>Módulo seguro para cadastrar/atualizar empresa na Focus e preparar emissão em homologação.</td>
+					</tr>
+					<tr>
+						<td>Fase 2 - Emissão MVP</td>
+						<td>Empresa ativa, cadastro de NF-e, itens, payload, transmissão, consulta e documentos.</td>
+						<td>NF-e modelo 55 autorizável para a empresa Focus selecionada, com XML/DANFe armazenados.</td>
+					</tr>
+					<tr>
+						<td>Fase 3 - Recebidas</td>
+						<td>Sync incremental, lista de recebidas, downloads e manifestação.</td>
+						<td>Empresa enxerga notas contra seu CNPJ e consegue manifestar operação.</td>
+					</tr>
+					<tr>
+						<td>Fase 4 - Operação fiscal</td>
+						<td>Cancelamento, carta de correção, inutilização e reenvio por e-mail.</td>
+						<td>Ciclo operacional completo para pós-emissão básico.</td>
+					</tr>
+					<tr>
+						<td>Fase 5 - Agro</td>
+						<td>Perfis fiscais agro, safra/lote/romaneio, produtor rural, conversões de unidade.</td>
+						<td>Operação mais aderente à rotina de fazendas, revendas, cerealistas e agroindústrias.</td>
+					</tr>
+					<tr>
+						<td>Fase 6 - Integrações ERP</td>
+						<td>Vínculo com pedido, fatura, estoque, contas a pagar/receber e anexos de fornecedor.</td>
+						<td>Menos retrabalho e maior conciliação operacional.</td>
+					</tr>
+					<tr>
+						<td>Fase 7 - Expansão fiscal</td>
+						<td>CT-e/MDF-e, NFSe quando necessário, exports contábeis e integrações com escritório contábil.</td>
+						<td>Plataforma fiscal mais ampla, mantendo o MVP estável.</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+
+		<section id="qualidade">
+			<h2>11. Qualidade, Testes e Critérios de Aceite</h2>
+			<h3>Testes mínimos</h3>
+			<ul class="checklist">
+				<li>Unitário do assistente de empresa Focus para criar/atualizar payload, validar certificado em memória e descartar senha/arquivo após a requisição.</li>
+				<li>Unitário do <code>FocusNfePayloadBuilder</code> para payload de NF-e simples, interestadual, produtor rural e operação sem frete.</li>
+				<li>Unitário do <code>FocusNfeClient</code> com respostas Focus simuladas para 200/201/202/400/401/403/404/415/422/429/500.</li>
+				<li>Integração em homologação para <code>dry_run</code> de empresa, envio de certificado válido, certificado vencido, certificado inválido e certificado de CNPJ divergente.</li>
+				<li>Integração em homologação para emissão autorizada, rejeição por campo inválido e consulta posterior.</li>
+				<li>Integração em homologação para listar recebidas, respeitar <code>X-Max-Version</code> e atualizar cursor.</li>
+				<li>Teste de UI para permissões: usuário sem escrita não transmite, usuário sem admin não edita token.</li>
+				<li>Teste de idempotência: retransmitir nota em processamento não duplica documento local.</li>
+			</ul>
+
+			<h3>Critérios de aceite do MVP</h3>
+			<ul class="checklist">
+				<li>Configuração Focus salva token de forma segura e permite alternar homologação/produção apenas para admin.</li>
+				<li>Admin consegue criar ou atualizar empresa Focus pelo Dolibarr usando <code>dry_run=1</code> antes da efetivação.</li>
+				<li>Upload de certificado não persiste arquivo, senha, base64 ou chave privada; apenas metadados ficam na lista de certificados enviados.</li>
+				<li>Usuário consegue escolher a empresa Focus ativa para emissão e importação de recebidas.</li>
+				<li>Usuário consegue criar uma NF-e modelo 55 com itens e transmitir em homologação.</li>
+				<li>Status autorizado, em processamento, rejeitado e cancelado aparecem de forma clara na tela.</li>
+				<li>XML e DANFe autorizados ficam disponíveis no card da nota.</li>
+				<li>Job de recebidas importa notas por CNPJ sem duplicar e mantém cursor por versão.</li>
+				<li>Usuário consegue manifestar ciência e manifestação final de uma nota recebida.</li>
+				<li>Logs técnicos registram endpoint, HTTP code e mensagem, sem gravar token nem dados sensíveis desnecessários.</li>
+			</ul>
+
+			<h3>Checklist de produção</h3>
+			<ul class="checklist">
+				<li>Empresa Focus criada/atualizada pelo assistente e conferida por consulta de empresa.</li>
+				<li>Certificado e emitente conferidos na resposta da Focus e, se necessário, no painel Focus.</li>
+				<li>CNPJ, IE, CRT, série e numeração revisados com contador.</li>
+				<li>Perfis fiscais validados para operações realmente usadas.</li>
+				<li>Backup de banco e diretório de documentos configurado.</li>
+				<li>Cron ativo para status e recebidas.</li>
+				<li>Usuários e permissões revisados.</li>
+				<li>Plano de reversão documentado para voltar a emissão manual/externa caso haja indisponibilidade.</li>
+			</ul>
+		</section>
+
+		<section id="riscos">
+			<h2>12. Riscos e Decisões Pendentes</h2>
+			<div class="grid">
+				<div class="card risk span-6">
+					<h3>Riscos</h3>
+					<ul>
+						<li>Parametrização fiscal incorreta pode gerar rejeição, autuação ou crédito indevido.</li>
+						<li>Consulta de recebidas depende da habilitação de manifestação do destinatário na Focus.</li>
+						<li>Campos agro variam muito por UF, regime, produto, benefício e operação.</li>
+						<li>Retentativas mal desenhadas podem duplicar chamadas ou mascarar erro fiscal.</li>
+						<li>Sem guardar arquivo e senha, o Dolibarr não consegue reenviar ou reativar certificado antigo sem novo upload.</li>
+						<li><code>data_inicio_recebimento_nfe</code> deve ser definida com cuidado, pois a Focus informa que documentos anteriores serão ignorados e a data não pode ser alterada após definida.</li>
+						<li>Armazenamento de XML e logs pode crescer rapidamente sem política de retenção.</li>
+					</ul>
+				</div>
+				<div class="card warn span-6">
+					<h3>Decisões pendentes</h3>
+					<ul>
+						<li>Fonte inicial da NF-e: documento fiscal próprio, pedido de venda, fatura ou todos em etapas.</li>
+						<li>Como mapear produto Dolibarr para dados fiscais: campos nativos, extrafields ou tabela fiscal dedicada.</li>
+						<li>Quem será o responsável funcional por validar CFOP/CST/CSOSN de cada perfil.</li>
+						<li>Se a escolha da empresa ativa será global por entidade Dolibarr ou configurável por filial/depósito quando houver multiempresa.</li>
+						<li>Política de criação automática de fornecedor/fatura a partir de NF-e recebida.</li>
+						<li>Periodicidade de sincronização: a Focus informa atualizações SEFAZ a cada duas horas; o cron local deve respeitar isso.</li>
+					</ul>
+				</div>
+			</div>
+
+			<h3>Primeiras decisões recomendadas</h3>
+			<ol>
+				<li>Fazer o assistente de empresa Focus antes da primeira emissão, porque a emissão depende de empresa habilitada e certificado válido.</li>
+				<li>Implementar primeiro um documento fiscal próprio <code>NFe</code>, com vínculos opcionais para pedidos/faturas, para reduzir acoplamento inicial.</li>
+				<li>Criar tabela de perfis fiscais, não depender só de extrafields de produto.</li>
+				<li>Usar homologação Focus até existir autorização, rejeição tratada, importação e manifestação testadas.</li>
+				<li>Registrar todas as respostas Focus relevantes, mas mascarar token e evitar logs com dados pessoais além do necessário para suporte.</li>
+			</ol>
+		</section>
+	</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+-- NF-es issued against the company's CNPJ and synchronized from Focus NFe.
+
+CREATE TABLE llx_fiscal_nfe_received(
+	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	entity integer DEFAULT 1 NOT NULL,
+	fk_focus_company integer,
+	environment varchar(20) DEFAULT 'homologation' NOT NULL,
+	chave_nfe varchar(44) NOT NULL,
+	cnpj_destinatario varchar(14) NOT NULL,
+	documento_emitente varchar(14),
+	nome_emitente varchar(255),
+	ie_emitente varchar(32),
+	uf_emitente varchar(2),
+	valor_total double(24,8) DEFAULT 0,
+	data_emissao datetime,
+	data_recebimento datetime,
+	situacao varchar(64),
+	manifestacao_destinatario varchar(64),
+	nfe_completa tinyint DEFAULT 0 NOT NULL,
+	tipo_nfe varchar(32),
+	versao bigint DEFAULT 0,
+	digest_value varchar(128),
+	caminho_xml varchar(255),
+	caminho_pdf varchar(255),
+	raw_json mediumtext,
+	status integer DEFAULT 0 NOT NULL,
+	last_sync datetime,
+	date_creation datetime NOT NULL,
+	tms timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	fk_user_creat integer,
+	fk_user_modif integer,
+	import_key varchar(14)
+) ENGINE=innodb;

@@ -1,0 +1,31 @@
+-- Focus NFe company registrations.
+
+CREATE TABLE llx_fiscal_focus_company(
+	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	entity integer DEFAULT 1 NOT NULL,
+	environment varchar(20) DEFAULT 'homologation' NOT NULL,
+	focus_id varchar(64),
+	cnpj varchar(14),
+	cpf varchar(11),
+	name varchar(255) NOT NULL,
+	nome_fantasia varchar(255),
+	inscricao_estadual varchar(32),
+	inscricao_municipal varchar(32),
+	regime_tributario integer,
+	uf varchar(2),
+	municipio varchar(100),
+	habilita_nfe tinyint DEFAULT 1 NOT NULL,
+	habilita_manifestacao tinyint DEFAULT 0 NOT NULL,
+	data_inicio_recebimento_nfe date,
+	fk_certificate_active integer,
+	active tinyint DEFAULT 0 NOT NULL,
+	status varchar(32) DEFAULT 'draft' NOT NULL,
+	focus_status varchar(64),
+	focus_message text,
+	last_sync datetime,
+	date_creation datetime NOT NULL,
+	tms timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	fk_user_creat integer NOT NULL,
+	fk_user_modif integer,
+	import_key varchar(14)
+) ENGINE=innodb;
